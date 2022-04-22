@@ -4,7 +4,6 @@ public class customerModel {
 
 	private int cus_id;
 	private String cus_name;
-	private int unit;
 	private String cus_mobile;
 	private String cus_email;
 	
@@ -12,11 +11,10 @@ public class customerModel {
 		
 	}
 	
-	public customerModel(int cus_id,String cus_name, int unit, String cus_mobile, String cus_email) {
+	public customerModel(int cus_id,String cus_name, String cus_mobile, String cus_email) {
 		super();
 		this.cus_id = cus_id;
 		this.cus_name = cus_name;
-		this.unit = unit;
 		this.cus_mobile = cus_mobile;
 		this.cus_email = cus_email;
 	}
@@ -35,14 +33,6 @@ public class customerModel {
 
 	public void setCus_name(String cus_name) {
 		this.cus_name = cus_name;
-	}
-
-	public int getUnit() {
-		return unit;
-	}
-
-	public void setUnit(int unit) {
-		this.unit = unit;
 	}
 
 	public String getCus_mobile() {

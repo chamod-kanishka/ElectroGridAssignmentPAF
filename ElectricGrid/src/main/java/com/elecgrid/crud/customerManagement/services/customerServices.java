@@ -16,7 +16,7 @@ public class customerServices {
 
 	public customerServices(){
 		try {
-			String url = String.format("jdbc:mysql://localhost:3306/customer");
+			String url = String.format("jdbc:mysql://localhost:3306/electricgrid");
 			String username = "root";
 			String password = "";
 
@@ -31,19 +31,16 @@ public class customerServices {
 	//insert customer
 	public customerModel insertCustomer(customerModel cus) {
 
-		String insertQuery = "insert into customer_details(cus_id, cus_name, unit, cus_email, cus_mobile) Values(?,?,?,?,?)";
+		String insertQuery = "insert into customer (cus_id, cus_name, unit, cus_email, cus_mobile) Values(?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(insertQuery);
 			ps.setInt(1, cus.getCus_id());
 			ps.setString(2, cus.getCus_name());
-			ps.setInt(3, cus.getUnit());
-			ps.setString(4, cus.getCus_email());
-			ps.setString(5, cus.getCus_mobile());
+			ps.setString(3, cus.getCus_email());
+			ps.setString(4, cus.getCus_mobile());
 
 			ps.execute();
-			
-			
 
 		} catch(Exception e) {
 			System.out.println(e +"data insertion is unsuccessful");
@@ -54,15 +51,10 @@ public class customerServices {
 
 	//get the list of the customer
 	public ArrayList<customerModel> getCustomer() throws SQLException {
-//		
-//		msgOutput = "<table border='1'><tr><th>Customer ID</th><th>Customer Name</th>" +
-//				"<th></th>" +
-//				"<th>Item Description</th>" +
-//				"<th>Update</th><th>Remove</th></tr>";
 
 		ArrayList<customerModel> selData = new ArrayList<customerModel>();
 
-		String selectQuery = "Select * from customer_details";
+		String selectQuery = "Select * from customer";
 
 		PreparedStatement ps = con.prepareStatement(selectQuery);
 		ResultSet rst = ps.executeQuery();
@@ -73,7 +65,6 @@ public class customerServices {
 
 			cm.setCus_id(rst.getInt("cus_id"));
 			cm.setCus_name(rst.getString("cus_name"));
-			cm.setUnit(rst.getInt("unit"));
 			cm.setCus_email(rst.getString("cus_email"));
 			cm.setCus_mobile(rst.getNString("cus_mobile"));
 
@@ -86,13 +77,12 @@ public class customerServices {
 	//update customer
 	public customerModel updateCustomer(customerModel cus) {
 
-		String updateQuery = "update customer_details set cus_id=?,cus_name=?, unit=?, cus_email=?, cus_mobile=? where cus_id=?";
+		String updateQuery = "update customer set cus_id=?,cus_name=?, unit=?, cus_email=?, cus_mobile=? where cus_id=?";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(updateQuery);
 			ps.setInt(1, cus.getCus_id());
 			ps.setString(2, cus.getCus_name());
-			ps.setInt(3, cus.getUnit());
 			ps.setString(4, cus.getCus_email());
 			ps.setString(5, cus.getCus_mobile());
 			ps.setInt(6, cus.getCus_id());
