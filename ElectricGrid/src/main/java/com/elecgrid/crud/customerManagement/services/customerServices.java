@@ -8,9 +8,13 @@ public class customerServices{
 	private Connection connect() {
 		Connection con = null;
 		try {
+<<<<<<< HEAD
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			String url = String.format("jdbc:mysql://localhost:3306/elecgrid");
+=======
+			String url = String.format("jdbc:mysql://localhost:3306/electricgrid");
+>>>>>>> 98241698c5f077dcdeb57a61efbf06be7a361c66
 			String username = "root";
 			String password = "";
 			
@@ -23,9 +27,15 @@ public class customerServices{
 	}
 
 	//insert customer
+<<<<<<< HEAD
 	public String insertCustomer(String cus_name, String cus_email, String cus_mobile) {
 		
 		String output = "";
+=======
+	public customerModel insertCustomer(customerModel cus) {
+
+		String insertQuery = "insert into customer (cus_id, cus_name, unit, cus_email, cus_mobile) Values(?,?,?,?,?)";
+>>>>>>> 98241698c5f077dcdeb57a61efbf06be7a361c66
 
 		try {
 			
@@ -37,6 +47,7 @@ public class customerServices{
 			String insertQuery = "insert into customer (`cus_id`, `cus_name`, `cus_email`, `cus_mobile`)" + "values(?,?,?,?)";
 			
 			PreparedStatement ps = con.prepareStatement(insertQuery);
+<<<<<<< HEAD
 			ps.setInt(1, 0);
 			ps.setString(2, cus_name);
 			ps.setString(3, cus_email);
@@ -46,6 +57,14 @@ public class customerServices{
 			con.close();
 			
 			output = "Inserted Successfully";
+=======
+			ps.setInt(1, cus.getCus_id());
+			ps.setString(2, cus.getCus_name());
+			ps.setString(3, cus.getCus_email());
+			ps.setString(4, cus.getCus_mobile());
+
+			ps.execute();
+>>>>>>> 98241698c5f077dcdeb57a61efbf06be7a361c66
 
 		} catch(Exception e) {
 			output = "Error While inserting the customer.";
@@ -55,6 +74,7 @@ public class customerServices{
 		return output;
 	}
 
+<<<<<<< HEAD
 	//view customer details
 	public String viewCustomer() {
 		
@@ -103,6 +123,50 @@ public class customerServices{
 		} catch (Exception e) {
 			output = "Error while reading customers";
 			System.err.println(e.getMessage());
+=======
+	//get the list of the customer
+	public ArrayList<customerModel> getCustomer() throws SQLException {
+
+		ArrayList<customerModel> selData = new ArrayList<customerModel>();
+
+		String selectQuery = "Select * from customer";
+
+		PreparedStatement ps = con.prepareStatement(selectQuery);
+		ResultSet rst = ps.executeQuery();
+
+		while(rst.next()) {
+
+			customerModel cm = new customerModel();
+
+			cm.setCus_id(rst.getInt("cus_id"));
+			cm.setCus_name(rst.getString("cus_name"));
+			cm.setCus_email(rst.getString("cus_email"));
+			cm.setCus_mobile(rst.getNString("cus_mobile"));
+
+			selData.add(cm);
+		}
+
+		return selData;
+	}
+
+	//update customer
+	public customerModel updateCustomer(customerModel cus) {
+
+		String updateQuery = "update customer set cus_id=?,cus_name=?, unit=?, cus_email=?, cus_mobile=? where cus_id=?";
+
+		try {
+			PreparedStatement ps = con.prepareStatement(updateQuery);
+			ps.setInt(1, cus.getCus_id());
+			ps.setString(2, cus.getCus_name());
+			ps.setString(4, cus.getCus_email());
+			ps.setString(5, cus.getCus_mobile());
+			ps.setInt(6, cus.getCus_id());
+
+			ps.executeUpdate();
+
+		} catch(Exception e) {
+			System.out.println(e +"data update is unsuccessful");
+>>>>>>> 98241698c5f077dcdeb57a61efbf06be7a361c66
 		}
 		return output;
 	}

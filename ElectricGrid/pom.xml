@@ -100,6 +100,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+<<<<<<< HEAD
             <!--<dependency>
 			    <groupId>org.glassfish.jersey.media</groupId>
 			    <artifactId>jersey-media-json-binding</artifactId>
@@ -124,6 +125,9 @@
 			</dependency>
         </dependencies>
         
+=======
+        </dependencies>
+>>>>>>> 98241698c5f077dcdeb57a61efbf06be7a361c66
     </dependencyManagement>
   
 </project>
