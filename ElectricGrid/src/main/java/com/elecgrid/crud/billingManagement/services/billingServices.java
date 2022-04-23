@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.elecgrid.crud.billingManagement.model.billingModel;
 
 
-
 public class billingServices {
 	
 	Connection con;
@@ -116,7 +115,7 @@ public class billingServices {
 			ps.executeUpdate();
 
 		} catch(Exception e) {
-			System.out.println(e +"data deletion is unsuccessful");
+			System.out.println(e +"Data Deletion is Unsuccessful");
 		}
 
 		return bill_id;
