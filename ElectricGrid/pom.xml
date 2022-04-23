@@ -42,10 +42,17 @@
 	    <version>1.19.4</version>
     </dependency>
     
+    <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-json -->
+	<dependency>
+	    <groupId>com.sun.jersey</groupId>
+	    <artifactId>jersey-json</artifactId>
+	    <version>1.19.4</version>
+	</dependency>
+    
     <dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
-		<version>8.0.19</version>
+		<version>8.0.26</version>
 	</dependency>
 	
 	<dependency>
@@ -59,7 +66,11 @@
 	    <artifactId>jsoup</artifactId>
 	    <version>1.8.3</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet-core -->
+
   </dependencies>
+  <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-binding -->
+
   
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -89,7 +100,30 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--<dependency>
+			    <groupId>org.glassfish.jersey.media</groupId>
+			    <artifactId>jersey-media-json-binding</artifactId>
+			    <version>3.1.0-M2</version>
+			</dependency>-->
+			<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
+			<dependency>
+			    <groupId>org.glassfish.jersey.inject</groupId>
+			    <artifactId>jersey-hk2</artifactId>
+			    <version>3.1.0-M2</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.glassfish.jersey.containers</groupId>
+			    <artifactId>jersey-container-servlet-core</artifactId>
+			    <version>3.0.0-M1</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+			<dependency>
+			    <groupId>com.googlecode.json-simple</groupId>
+			    <artifactId>json-simple</artifactId>
+			    <version>1.1.1</version>
+			</dependency>
         </dependencies>
+        
     </dependencyManagement>
   
 </project>

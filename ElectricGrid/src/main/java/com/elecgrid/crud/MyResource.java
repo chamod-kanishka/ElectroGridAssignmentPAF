@@ -1,4 +1,4 @@
-package com.elecgrid.crud.customerManagement;
+package com.elecgrid.crud;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
@@ -14,7 +14,7 @@ public class MyResource {
 	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+        return "RestFull Web Service";
     }
 
 }

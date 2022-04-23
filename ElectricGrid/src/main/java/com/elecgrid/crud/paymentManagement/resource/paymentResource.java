@@ -1,53 +1,74 @@
 package com.elecgrid.crud.paymentManagement.resource;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.elecgrid.crud.paymentManagement.model.paymentModel;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+
 import com.elecgrid.crud.paymentManagement.services.paymentServices;
 
+@Path("/payments")
 public class paymentResource {
+
+	paymentServices payServ = new paymentServices();
 	
-paymentServices services = new paymentServices();
-	
-	@Path("/addPaymentDetails")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public paymentModel addCustomer(paymentModel pModel) {
-		
-		 return services.insertPayment(pModel);
-	}
-	
-	@Path("/retrievePayments")
+	//View all payments
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<paymentModel> getCustomer() throws SQLException {
-		
-		return services.readPayment();
+	@Path("/")
+	@Produces(MediaType.TEXT_HTML)
+	public String viewPayments(){
+		return payServ.viewPayments();
 	}
 	
-	@Path("/updatePayment")
+	//insert payments
+	@POST
+	@Path("/addPayment")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_HTML)
+	public String insertPayDetails(@FormParam("pay_type") String pay_type, @FormParam("amount") String amount,
+								@FormParam("cus_id") String cus_id, @FormParam("bill_id") String bill_id) 
+	{
+		
+		String output = payServ.insertPayDetails(pay_type, amount, cus_id, bill_id);
+		return output + "<h1>Your Payment is success..!</h1>";
+	}
+	
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	public paymentModel updateCustomer(paymentModel pModel) {
+	@Path("/updatePayment")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateCustomer(@FormParam("pay_type") String pay_type, @FormParam("amount") String amount,
+			@FormParam("pay_id") String pay_id) {
+			
+		String output = payServ.updatePayment(pay_id, pay_type, amount);
 		
-		 return services.updatePayment(pModel);
+		return output;
 	}
 	
-	@Path("/deletePayment/{pay_id}")
+	
+	//Delete payment
 	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	public int deleteCustomer(@PathParam("pay_id") int pay_id) {
+	@Path("/removePayment")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteCustomer(String payments)
+	{
+		//Convert the input string to an XML document
+		Document pdoc = Jsoup.parse(payments, "", Parser.xmlParser());
 		
-		return services.deletePayment(pay_id);
+		//Read the value from the element customer id
+		String pay_id = pdoc.select("pay_id").text();
+		String output = payServ.deleteCustomer(pay_id);
+	
+	return output;
 	}
 }
