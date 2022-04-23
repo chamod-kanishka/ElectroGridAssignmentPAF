@@ -47,6 +47,7 @@ public class customerServices {
 
 		} catch(Exception e) {
 			System.out.println(e +"data insertion is unsuccessful");
+			System.out.println(e +"data insertion is unsuccessful");
 		}
 
 		return cus;
