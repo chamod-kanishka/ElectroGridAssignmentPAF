@@ -26,6 +26,67 @@ public class billingServices {
 			return con;
 		}
 		
+		//view bills
+		public String viewBills() {
+			
+			String output ="";
+			
+			try {
+				
+				Connection con = connect();
+				
+				if (con==null)
+				{ return "Error!! While connecting to the database for read the bill items";}
+				
+				// Prepare the html table to be displayed
+				output = "<table border='1'><tr><th>Bill ID</th>" 
+				+ "<th>Bill NO</th>" 
+				+ "<th>Customer Name</th>" 
+				+ "<th>Bill Description</th>" 
+				+ "<th>Bill Type</th>" 
+				+ "<th>Units</th>" +
+				"<th>Update</th><th>Remove</th></tr>";
+				
+				String query = "select * from bills b, customer c where c.cus_id = b.cus_id";
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(query);
+				
+				while(rs.next()) {
+					
+					String bill_id = Integer.toString(rs.getInt("bill_id"));
+					String bill_no = rs.getString("bill_no");
+					String cus_name = rs.getString("cus_name");
+					String bill_desc = rs.getString("bill_desc");
+					String bill_type = rs.getString("bill_type");
+					String units = rs.getString("unit");
+					
+					// Add into the html table
+					output += "<tr><td>" + bill_id + "</td>";
+					output += "<td>" + bill_no + "</td>";
+					output += "<td>" + cus_name + "</td>";
+					output += "<td>" + bill_desc + "</td>";
+					output += "<td>" + bill_type + "</td>";
+					output += "<td>" + units + "</td>";
+					
+					// buttons
+					output += "<td><input name='btnUpdate' type='button' value='Update'class='btn btn-secondary'></td>"
+					+ "<td><form method='post' action=''>"
+					+ "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
+					+ "<input name='cus_id' type='hidden' value='" + bill_id
+					+ "'>" + "</form></td></tr>";
+					
+				}
+				
+				con.close();
+				
+				output += "</table>";
+			} catch (Exception e) {
+				output = "Error while reading bill items";
+				System.err.println(e.getMessage());
+			}
+			return output;
+		}
+		
 		//add billing
 		public String insertBill(String bill_no, String bill_desc, String bill_type,String unit, String cus_id) {
 			
@@ -74,7 +135,7 @@ public class billingServices {
 				{ return "Error!! While connecting to the database for updating the " + bill_id;}
 				
 				// create a prepared statement
-				String query = "UPDATE bills SET bill_no=?, bill_type=?, bill_desc=?, unit=? WHERE cus_id=?";
+				String query = "UPDATE bills SET bill_no=?, bill_type=?, bill_desc=?, unit=? WHERE bill_id=?";
 				
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				
@@ -91,7 +152,6 @@ public class billingServices {
 				con.close();
 				
 				output = "Updated successfully";
-				output = " new Updated successfully";
 				
 			} catch (Exception e) {
 				
@@ -141,7 +201,7 @@ public class billingServices {
 						curr_amount = (double) ((double) (60 * 7.85) + (30 * 10.00) + (30 * 27.75) + (60 * 32.75) + (unit - 180) * 45.00);
 					}
 					
-					// Add into the html table
+					// Dispaly bill details
 					output = "Customer ID - " + cusid + "<br>Name: " +cName + "<br>Bill No- "+bill_no+ "<br>Units- "+ units + "<br>Date- " + curdate + "<br>Amount - Rs. " +  curr_amount;
 					
 				}
