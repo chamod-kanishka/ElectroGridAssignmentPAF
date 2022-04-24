@@ -134,7 +134,7 @@ public class billingServices {
 				{ return "Error!! While connecting to the database for updating the " + bill_id;}
 				
 				// create a prepared statement
-				String query = "UPDATE bills SET bill_no=?, bill_type=?, bill_desc=?, unit=? WHERE cus_id=?";
+				String query = "UPDATE bills SET bill_no=?, bill_type=?, bill_desc=?, unit=? WHERE bill_id=?";
 				
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				
